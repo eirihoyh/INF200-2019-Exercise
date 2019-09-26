@@ -1,5 +1,5 @@
 def bubble_sort(data):
-    """Takes in a tuplet and sort the numbers inside"""
+    """Takes in a tuplet and sorts the numbers inside"""
     new_data = list(data)
     swap = True
     while swap:
