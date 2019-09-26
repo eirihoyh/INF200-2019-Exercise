@@ -1,4 +1,6 @@
 from math import log2
+
+
 def letter_freq(txt):
     """Takes in a text and counts how many times a character is used"""
     lower_txt = txt.lower()
@@ -16,11 +18,10 @@ def entropy(message):
     h = 0
     for n_i in counter.values():
         n = sum(counter.values())
-        p_i = n_i/n
-        h += -p_i*log2(p_i)
+        p_i = n_i / n
+        h += -p_i * log2(p_i)
 
     return h
-
 
 
 if __name__ == "__main__":
