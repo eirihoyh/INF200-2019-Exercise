@@ -1,7 +1,7 @@
 Exercise 2
 ----------
 
--  Deadline: **Friday 26th September, 14.00**
+-  Deadline: **Friday 27th September, 14.00**
 -  All hand-ins in form of pull request on GitHub
 -  Make sure you use the correct repository, branch, project and file
    names!
@@ -84,7 +84,6 @@ or equivalently, how much information a message carries per letter.
 Entropy is then defined as
 
 .. math::
-
 
        H = - \sum_i p_i \log_2 p_i
 
