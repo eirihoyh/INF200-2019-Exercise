@@ -13,7 +13,7 @@ def test_empty():
 
 def test_single():
     """Test that the sorting function works for single-element list"""
-    assert bubble_sort(1) == [1]
+    assert bubble_sort([1]) == [1]
 
 
 def test_sorted_is_not_original():
@@ -30,7 +30,7 @@ def test_sorted_is_not_original():
     """
     data = [3, 2, 1]
     sorted_data = bubble_sort(data)
-    assert data = sorted_data
+    assert data is not sorted_data
 
 def test_original_unchanged():
     """
@@ -51,8 +51,8 @@ def test_original_unchanged():
 def test_sort_sorted():
     """Test that sorting works on sorted data."""
     data = [2, 1, 4]
-    sorted_data  = bubble_sort(data)
-    assert sorted_data == [4, 2, 1]
+    sorted_data = bubble_sort(data)
+    assert sorted_data == sorted(data)
 
 
 def test_sort_reversed():
@@ -60,7 +60,7 @@ def test_sort_reversed():
     data = [3, 2, 1, 4, 5, 6]
     data.reverse()
     sorted_data = bubble_sort(data)
-    assert sorted_data == [6, 5, 4, 3, 2, 1]
+    assert sorted_data == [1, 2, 3, 4, 5, 6]
 
 
 def test_sort_all_equal():
