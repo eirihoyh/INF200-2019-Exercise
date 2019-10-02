@@ -3,70 +3,64 @@
 __author__ = 'Eirik Høyheim'
 __email__ = 'eirihoyh@nmbu.no'
 
-from ..bubble_sort import bubble_sort
+
+@pytest.fixture
+def fixed_data_list():
+    return [1, 4, 7, 9, 3]
 
 
-def test_empty():
-    """Test that the sorting function works for empty list"""
-    assert bubble_sort([]) == []
-
-
-def test_single():
-    """Test that the sorting function works for single-element list"""
-    assert bubble_sort(1) == [1]
-
-
-def test_sorted_is_not_original():
+def median(data):
     """
-    Test that the sorting function returns a new object.
+    Returns median of data.
 
-    Consider
-
-    data = [3, 2, 1]
-    sorted_data = bubble_sort(data)
-
-    Now sorted_data shall be a different object than data,
-    not just another name for the same object.
+    :param data: An iterable of containing numbers
+    :return: Median of data
     """
-    data = [3, 2, 1]
-    sorted_data = bubble_sort(data)
-    assert (data == sorted_data)
 
-def test_original_unchanged():
-    """
-    Test that sorting leaves the original data unchanged.
-
-    Consider
-
-    data = [3, 2, 1]
-    sorted_data = bubble_sort(data)
-
-    Now data shall still contain [3, 2, 1].
-    """
-    pass
+    sdata = sorted(data)
+    n = len(sdata)
+    return (sdata[n // 2] if n % 2 == 1
+            else 0.5 * (sdata[n // 2 - 1] + sdata[n // 2]))
 
 
-def test_sort_sorted():
-    """Test that sorting works on sorted data."""
-    pass
+def test_median_of_singeleton():
+    assert median([4]) == 4
 
 
-def test_sort_reversed():
-    """Test that sorting works on reverse-sorted data."""
-    pass
+def test_median_odd_numbers():
+    assert median([1, 3, 5, 7, 9]) == 5
 
 
-def test_sort_all_equal():
-    """Test that sorting handles data with identical elements."""
-    pass
+def test_median_even_numbers():
+    assert median[2, 4, 6, 8, 10] == 6
 
 
-def test_sorting():
-    """
-    Test sorting for various test cases.
+def test_median_with_orded_numbers():
+    assert median([1, 2, 3, 4, 5, 6, 7]) == 4
 
-    This test case should test sorting of a range of data sets and
-    ensure that they are sorted correctly. These could be lists of
-    numbers of different length or lists of strings.
-    """
-    pass
+
+def test_median_with_reverse_order():
+    assert median([7, 6, 5, 4, 3, 2, 1]) == 4
+
+
+def test_median_unordered():
+    assert median([2, 4, 1, 3, 6]) == 3
+
+
+def test_median_rasis_value_error_on_empty_list():
+    with pytest.raises(ValueError):
+        median([])
+
+
+def test_median_does_not_change_org_data(fixed_data_list):
+    data = fixed_data_list
+    median(data)
+    assert data == fixed_data_list
+
+
+def test_median_for_tuplets():
+    data_tuplet = (1, 2, 3, 4, 5)
+    data_list = [1, 2, 3, 4, 5]
+    assert median(data_tuplet) == median(data_list)
+
+
