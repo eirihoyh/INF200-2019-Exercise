@@ -58,6 +58,7 @@ def test_median_unordered():
 
 
 def test_median_rasis_value_error_on_empty_list():
+    """Checks if the median raises a ValueError when the list is empty"""
     with pytest.raises(ValueError):
         median([])
 
