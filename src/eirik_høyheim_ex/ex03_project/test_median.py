@@ -28,6 +28,7 @@ def median(data):
 
 
 def test_median_of_singeleton():
+    """Tests if the median of a list just containing 4 is 4"""
     assert median([4]) == 4
 
 
