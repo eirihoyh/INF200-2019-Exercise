@@ -42,7 +42,8 @@ def test_median_even_numbers():
     assert median([2, 4, 6, 8, 10, 12]) == 7
 
 
-def test_median_with_orded_numbers():
+def test_median_with_ordered_numbers():
+    """Tests if the meidian function can find the median of a list with ordered numbers"""
     assert median([1, 2, 3, 4, 5, 6, 7]) == 4
 
 
