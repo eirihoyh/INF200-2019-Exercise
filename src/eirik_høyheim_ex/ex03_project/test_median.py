@@ -72,6 +72,7 @@ def test_median_does_not_change_org_data(fixed_data_list):
 
 
 def test_median_for_tuplets():
+    """Checks if the can take in a tuplet list and get the same results as if they were lists"""
     data_tuplet = (1, 2, 3, 4, 5)
     data_list = [1, 2, 3, 4, 5]
     assert median(data_tuplet) == median(data_list)
