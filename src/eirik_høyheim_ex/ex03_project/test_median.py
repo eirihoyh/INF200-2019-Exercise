@@ -48,6 +48,7 @@ def test_median_with_ordered_numbers():
 
 
 def test_median_with_reverse_order():
+    """Checks if the median function can find the median of a list with reverse order"""
     assert median([7, 6, 5, 4, 3, 2, 1]) == 4
 
 
