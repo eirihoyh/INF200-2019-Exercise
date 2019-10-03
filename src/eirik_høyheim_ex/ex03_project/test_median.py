@@ -53,6 +53,7 @@ def test_median_with_reverse_order():
 
 
 def test_median_unordered():
+    """Checks if the median function can find the median of a list that is out of order"""
     assert median([2, 4, 1, 3, 6]) == 3
 
 
