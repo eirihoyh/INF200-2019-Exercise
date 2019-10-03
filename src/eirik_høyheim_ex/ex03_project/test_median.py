@@ -33,27 +33,32 @@ def test_median_of_singeleton():
 
 
 def test_median_odd_numbers():
-    """Test if the median function can find the median of a list with odd numbers"""
+    """Test if the median function can find the median of a list with odd
+    numbers """
     assert median([1, 3, 5, 7, 9]) == 5
 
 
 def test_median_even_numbers():
-    """Tests if the median function can find the median of list with even numbers"""
+    """Tests if the median function can find the median of list with even
+    numbers """
     assert median([2, 4, 6, 8, 10, 12]) == 7
 
 
 def test_median_with_ordered_numbers():
-    """Tests if the meidian function can find the median of a list with ordered numbers"""
+    """Tests if the meidian function can find the median of a list with
+    ordered numbers """
     assert median([1, 2, 3, 4, 5, 6, 7]) == 4
 
 
 def test_median_with_reverse_order():
-    """Checks if the median function can find the median of a list with reverse order"""
+    """Checks if the median function can find the median of a list with
+    reverse order """
     assert median([7, 6, 5, 4, 3, 2, 1]) == 4
 
 
 def test_median_unordered():
-    """Checks if the median function can find the median of a list that is out of order"""
+    """Checks if the median function can find the median of a list that is
+    out of order """
     assert median([2, 4, 1, 3, 6]) == 3
 
 
@@ -72,7 +77,8 @@ def test_median_does_not_change_org_data(fixed_data_list):
 
 
 def test_median_for_tuplets():
-    """Checks if the can take in a tuplet list and get the same results as if they were lists"""
+    """Checks if the can take in a tuplet list and get the same results as
+    if they were lists """
     data_tuplet = (1, 2, 3, 4, 5)
     data_list = [1, 2, 3, 4, 5]
     assert median(data_tuplet) == median(data_list)
