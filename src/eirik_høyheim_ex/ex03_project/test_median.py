@@ -3,6 +3,8 @@
 __author__ = 'Eirik Høyheim'
 __email__ = 'eirihoyh@nmbu.no'
 
+import pytest
+
 
 @pytest.fixture
 def fixed_data_list():
@@ -19,6 +21,8 @@ def median(data):
 
     sdata = sorted(data)
     n = len(sdata)
+    if n == 0:
+        raise ValueError
     return (sdata[n // 2] if n % 2 == 1
             else 0.5 * (sdata[n // 2 - 1] + sdata[n // 2]))
 
@@ -32,7 +36,7 @@ def test_median_odd_numbers():
 
 
 def test_median_even_numbers():
-    assert median[2, 4, 6, 8, 10] == 6
+    assert median([2, 4, 6, 8, 10]) == 6
 
 
 def test_median_with_orded_numbers():
@@ -62,5 +66,3 @@ def test_median_for_tuplets():
     data_tuplet = (1, 2, 3, 4, 5)
     data_list = [1, 2, 3, 4, 5]
     assert median(data_tuplet) == median(data_list)
-
-
