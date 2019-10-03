@@ -64,6 +64,8 @@ def test_median_rasis_value_error_on_empty_list():
 
 
 def test_median_does_not_change_org_data(fixed_data_list):
+    """Checks if the median function does not change the original data.
+    Made a fixed_data_list that I use to have a standard list."""
     data = fixed_data_list
     median(data)
     assert data == fixed_data_list
