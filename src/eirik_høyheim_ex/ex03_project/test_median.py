@@ -33,11 +33,13 @@ def test_median_of_singeleton():
 
 
 def test_median_odd_numbers():
+    """Test if the median function can find the median of a list with odd numbers"""
     assert median([1, 3, 5, 7, 9]) == 5
 
 
 def test_median_even_numbers():
-    assert median([2, 4, 6, 8, 10]) == 6
+    """Tests if the median function can find the median of list with even numbers"""
+    assert median([2, 4, 6, 8, 10, 12]) == 7
 
 
 def test_median_with_orded_numbers():
