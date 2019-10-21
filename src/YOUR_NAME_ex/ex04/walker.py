@@ -50,4 +50,4 @@ if __name__ == "__main__":
         for sims in range(num_sim):
             dist.append(walking(0, distance))
 
-        print(f'Distance: {distance} -> Path lengths: {dist}')
+        print(f'Distance: {distance} -> Path lengths: {sorted(dist)}')
