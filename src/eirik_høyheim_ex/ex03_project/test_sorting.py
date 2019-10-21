@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-__author__ = 'Eirik Høyheim'
-__email__ = 'eirihoyh@nmbu.no'
+__author__ = "Eirik Høyheim"
+__email__ = "eirihoyh@nmbu.no"
 
 
 def bubble_sort(data):
@@ -93,7 +93,7 @@ def test_sorting():
     numbers of different length or lists of strings.
     """
     data1 = [34, 10021, 2, 100]
-    data2 = ['911123', '111', '64', '1', '3452', '732']
+    data2 = ["911123", "111", "64", "1", "3452", "732"]
     data3 = [1, 2, 6, 3, 8, 5, 2, 1, 6, 90, 4, 2, 1]
     sorted_data1 = bubble_sort(data1)
     sorted_data2 = bubble_sort(data2)

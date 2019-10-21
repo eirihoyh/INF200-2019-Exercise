@@ -5,8 +5,7 @@ __email__ = "yngve.m.moe@gmail.com"
 
 from itertools import product
 
-
-SUITS = ('C', 'S', 'H', 'D')
+SUITS = ("C", "S", "H", "D")
 VALUES = range(1, 14)
 
 
@@ -24,6 +23,6 @@ def deck_comp():
     return [(suit, value) for suit in SUITS for value in VALUES]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if deck_loop() != deck_comp():
-        print('ERROR!')
+        print("ERROR!")

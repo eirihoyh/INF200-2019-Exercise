@@ -1,7 +1,6 @@
 from ..deck_by_comp import deck_comp
 
 
-
 def test_deck_of_cards_have_52_cards():
     assert len(deck_by_comp()) == 52
 

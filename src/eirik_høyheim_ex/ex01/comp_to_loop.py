@@ -11,6 +11,6 @@ def squares_by_loop(n):
     return list_
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if squares_by_comp(2) != squares_by_loop(2):
-        print('ERROR!')
+        print("ERROR!")

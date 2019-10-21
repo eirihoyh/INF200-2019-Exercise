@@ -1,4 +1,4 @@
-SUITS = ('C', 'S', 'H', 'D')
+SUITS = ("C", "S", "H", "D")
 VALUES = range(1, 14)
 
 
@@ -15,6 +15,6 @@ def deck_comp():
     return [(letters, values) for letters in SUITS for values in VALUES]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if deck_loop() != deck_comp():
-        print('ERROR!')
+        print("ERROR!")

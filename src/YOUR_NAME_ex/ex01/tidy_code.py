@@ -9,7 +9,7 @@ from random import randint
 def guess_dice_roll():
     guess = 0
     while guess < 1:
-        guess = int(input('Your guess: '))
+        guess = int(input("Your guess: "))
     return guess
 
 
@@ -21,7 +21,7 @@ def check_answer(guess, answer):
     return guess == answer
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     has_won = False
     attempts_left = 3
     answer = roll_two_dice()

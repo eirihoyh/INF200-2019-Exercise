@@ -1,7 +1,7 @@
 from random import randint as rand
 
-__author__ = 'Eirik Høyheim'
-__email__ = 'eirihoyh@nmbu.no'
+__author__ = "Eirik Høyheim"
+__email__ = "eirihoyh@nmbu.no"
 
 
 def number_guess():
@@ -10,7 +10,7 @@ def number_guess():
     """
     your_number = 0
     while your_number < 1:
-        your_number = int(input('Your guess: '))
+        your_number = int(input("Your guess: "))
     return your_number
 
 
@@ -29,19 +29,19 @@ def number_comparison(number_guess, random_number):
     return number_guess == random_number
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     pre_answer = False
     chances = 3
     correct_number = random_number()
-    while not pre_answer and chances > 0:  
+    while not pre_answer and chances > 0:
         my_guess = number_guess()
         pre_answer = number_comparison(correct_number, my_guess)
         if not pre_answer:
-            print('Wrong, try again!')
+            print("Wrong, try again!")
             chances -= 1
 
     if chances > 0:
-        print('You won {} points.'.format(chances))
+        print("You won {} points.".format(chances))
     else:
-        print('You lost. Correct answer: {}.'.format(correct_number))
+        print("You lost. Correct answer: {}.".format(correct_number))

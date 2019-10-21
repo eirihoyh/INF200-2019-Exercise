@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-__author__ = 'Eirik Høyheim'
-__email__ = 'eirihoyh@nmbu.no'
+__author__ = "Eirik Høyheim"
+__email__ = "eirihoyh@nmbu.no"
 
 import pytest
 
@@ -23,8 +23,11 @@ def median(data):
     n = len(sdata)
     if n == 0:
         raise ValueError
-    return (sdata[n // 2] if n % 2 == 1
-            else 0.5 * (sdata[n // 2 - 1] + sdata[n // 2]))
+    return (
+        sdata[n // 2]
+        if n % 2 == 1
+        else 0.5 * (sdata[n // 2 - 1] + sdata[n // 2])
+    )
 
 
 def test_median_of_singeleton():
