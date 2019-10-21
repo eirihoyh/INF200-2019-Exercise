@@ -3,18 +3,16 @@
 __author__ = 'Eirik Høyheim'
 __email__ = 'eirihoyh@nmbu.no'
 
-import random
-
 
 class LCGRand:
     def __init__(self, seed):
         self.a = 7**5
         self.m = (2**31)-1
-        self.n = 0
         self.seed = seed
 
     def rand(self):
-        pass
+        self.seed = ((self.a)*(self.seed)) % self.m
+        return self.seed
 
 
 class ListRand:
@@ -23,9 +21,8 @@ class ListRand:
         self.position = 0
 
     def rand(self):
-        try:
-            k = self.numberlist[self.position]
-            self.position += 1
-            return k
-        except RuntimeError:
-            print('The list is empty')
+        if self.position == len(self.numberlist):
+            raise RuntimeError
+        number = self.numberlist[self.position]
+        self.position += 1
+        return number
