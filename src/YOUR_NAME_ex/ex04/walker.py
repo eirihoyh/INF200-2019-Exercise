@@ -7,6 +7,9 @@ import random
 
 
 class Walker:
+    """A class that takes in your start position and the position your are
+    going to. It is random if you go forward or backward, and counts how
+    many steps you have to take to get to your final position"""
     def __init__(self, x0, h):
         self.x0 = x0
         self.h = h
@@ -34,6 +37,9 @@ class Walker:
 
 
 def walking(startpos, homepos):
+    """takes in a start position and home position and gives out
+    how many steps you have taken to get home with help from the Walker
+    class"""
     pos = Walker(startpos, homepos)
 
     while homepos != pos.get_position():
