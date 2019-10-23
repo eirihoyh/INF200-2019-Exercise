@@ -12,7 +12,7 @@ class LCGRand:
         self.seed = seed
 
     def rand(self):
-        self.seed = (self.a * (self.seed)) % self.m
+        self.seed = (self.a * self.seed) % self.m
         return self.seed
 
 
