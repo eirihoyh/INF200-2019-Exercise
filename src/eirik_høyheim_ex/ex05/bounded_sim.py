@@ -29,4 +29,3 @@ if __name__ == "__main__":
     left_boundary = [0, -10, -100, -1000, -10000]
     home = 20
     start = 0
-    
