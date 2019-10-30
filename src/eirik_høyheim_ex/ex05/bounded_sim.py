@@ -6,21 +6,23 @@ __email__ = "eirihoyh@nmbu.no"
 import random
 from walker_sim import Walker, Simulation
 
-class BoundedWalker:
+class BoundedWalker(Walker):
     def __initi__(self, start, home, left_limit, right_limit):
         self.start = start
         self.home = home
         self.left_limit = left_limit
         self.right_limit = right_limit
+        super().__init__(start,home)
 
 
-class BoundedSimulation:
+class BoundedSimulation(Simulation):
     def __init__(self, start, home, seed, left_limit, right_limit):
         self.start = start
         self.home = home
         self.left_limit = left_limit
         self.right_limit = right_limit
         random.seed = seed
+        super().__init__(start, home, seed)
 
 if __name__ == "__main__":
     num_of_walk = 20
