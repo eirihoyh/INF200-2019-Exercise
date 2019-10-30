@@ -48,6 +48,9 @@ class Simulation:
         random.seed(seed)
 
     def single_walk(self):
+        """takes in a start position and home position and gives out
+        how many steps you have taken to get home with help from the Walker
+        class"""
         pos = Walker(self.start, self.home)
 
         while self.home != pos.get_position():
@@ -58,7 +61,7 @@ class Simulation:
     def run_simulation(self, num_walk):
         dist = []
         for sim in range(num_walk):
-            dist.append(Walker(self.start, self.home))
+            dist.append(self.single_walk())
 
         return dist
 
@@ -66,11 +69,15 @@ class Simulation:
 if __name__ == "__main__":
     num_of_walk = 20
     seeds = [12345, 54321]
-    home = [10, 0]
-    start = [0, 10]
-    for seed in seeds:
-        for turns in range(2):
-            simple_list = []
-            t = Simulation(start[turns], home[turns], seed)
-            simple_list.append(t.run_simulation(num_of_walk))
-            print(simple_list)
+    starts = [0, 10]
+    homes = [10, 0]
+
+    for walk_seed0 in range(2):
+        for run_2_times in range(2):
+
+            sim = Simulation(starts[walk_seed0], homes[walk_seed0], seeds[0])
+            print(sim.run_simulation(num_of_walk))
+
+    for walk_seed1 in range(2):
+        sim = Simulation(starts[walk_seed1], homes[walk_seed1], seeds[1])
+        print(sim.run_simulation(num_of_walk))
