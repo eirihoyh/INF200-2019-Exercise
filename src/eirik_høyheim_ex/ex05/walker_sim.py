@@ -60,7 +60,7 @@ class Simulation:
 
     def run_simulation(self, num_walk):
         dist = []
-        for sim in range(num_walk):
+        for simulations in range(num_walk):
             dist.append(self.single_walk())
 
         return dist
