@@ -3,12 +3,17 @@
 __author__ = "Eirik Høyheim"
 __email__ = "eirihoyh@nmbu.no"
 
-
 from walker_sim import Walker, Simulation
 
 
 class BoundedWalker(Walker):
-    def __initi__(self, start, home, left_limit, right_limit):
+    def __init__(self, start, home, left_limit, right_limit):
+        if not (left_limit <= start <= right_limit):
+            raise ValueError('Start most be between the left limit and the '
+                             'right limit')
+        if not (left_limit <= home <= right_limit):
+            raise ValueError('Home most be between the left limit and the '
+                             'right limit')
         super().__init__(start, home)
         self.left_limit = left_limit
         self.right_limit = right_limit
@@ -19,11 +24,10 @@ class BoundedWalker(Walker):
             self.x0 = self.right_limit
 
         if self.x0 <= self.left_limit:
-            self.x0 = self.right_limit
+            self.x0 = self.left_limit
 
 
 class BoundedSimulation(Simulation):
-
     def __init__(self, start, home, seed, left_limit, right_limit):
         super().__init__(start, home, seed)
         self.left_limit = left_limit
@@ -47,9 +51,9 @@ if __name__ == "__main__":
     home = 20
     start = 0
     for left in left_boundary:
-        steps = BoundedSimulation(0, 20,
+        steps = BoundedSimulation(home=home, start=start,
                                   seed=seed,
                                   left_limit=left,
-                                  right_limit=right_boundary)\
+                                  right_limit=right_boundary) \
             .run_simulation(20)
         print(left, steps)
