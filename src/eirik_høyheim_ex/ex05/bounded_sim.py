@@ -7,6 +7,8 @@ from walker_sim import Walker, Simulation
 
 
 class BoundedWalker(Walker):
+    """A class that takes in Walker, and puts on a limit of how far to the left
+    and how far to the right you can go"""
     def __init__(self, start, home, left_limit, right_limit):
         if not (left_limit <= start <= right_limit):
             raise ValueError('Start most be between the left limit and the '
@@ -28,6 +30,8 @@ class BoundedWalker(Walker):
 
 
 class BoundedSimulation(Simulation):
+    """Takes in simulation and uses bounded_walker to set a limit from left
+    to right, and runs it as many times that you want"""
     def __init__(self, start, home, seed, left_limit, right_limit):
         super().__init__(start, home, seed)
         self.left_limit = left_limit

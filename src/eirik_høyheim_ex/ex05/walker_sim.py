@@ -33,7 +33,7 @@ class Walker:
         return self.steps
 
     def is_at_home(self):
-        """Retruns True if wlaker is at home"""
+        """Retruns True if walker is at home"""
         if self.x0 == self.h:
             return True
         else:
