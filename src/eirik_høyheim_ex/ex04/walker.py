@@ -36,16 +36,16 @@ class Walker:
         return self.steps
 
 
-def walking(startpos, homepos):
-    """takes in a start position and home position and gives out
-    how many steps you have taken to get home with help from the Walker
-    class"""
-    pos = Walker(startpos, homepos)
+    def walking(self):
+        """takes in a start position and home position and gives out
+        how many steps you have taken to get home with help from the Walker
+        class"""
 
-    while homepos != pos.get_position():
-        pos.move()
 
-    return pos.get_steps()
+        while self.h != self.get_position():
+            self.move()
+
+        return self.get_steps()
 
 
 if __name__ == "__main__":
@@ -54,6 +54,7 @@ if __name__ == "__main__":
     for distance in dist_list:
         dist = []
         for sims in range(num_sim):
-            dist.append(walking(0, distance))
+            home_walk = Walker(0, distance)
+            dist.append(home_walk.walking())
 
         print(f'Distance: {distance} -> Path lengths: {sorted(dist)}')
