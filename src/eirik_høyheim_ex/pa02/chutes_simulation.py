@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-__author__ = "Eirik Høyheim"
-__email__ = "eirihoyh@nmbu.no"
-__author__ = "Meenbet A.Delele"
-__email__ = "mesenbea@nmbu.no"
+__author__ = "Eirik Høyheim, Meenbet A.Delele"
+__email__ = "eirihoyh@nmbu.no, mesenbea@nmbu.no"
+
 import random
 
 
@@ -129,7 +128,7 @@ class Simulation:
         dicts = {}
         for player in self.player_list:
             dicts[player.n_steps] = player
-            while player.check_in_goal() :
+            while player.check_in_goal():
                 player.move()
 
         return print(dicts)  # very unsure if it works, not able to test
