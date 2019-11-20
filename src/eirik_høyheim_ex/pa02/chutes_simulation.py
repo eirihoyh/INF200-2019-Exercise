@@ -2,7 +2,8 @@
 
 __author__ = "Eirik Høyheim"
 __email__ = "eirihoyh@nmbu.no"
-
+__author__ = "Meenbet A.Delele"
+__email__ = "mesenbea@nmbu.no"
 import random
 
 
