@@ -20,7 +20,7 @@ class Board:
         self.goal = goal
 
     def goal_reached(self, position):
-        return position >= self.goal
+        return bool(position >= self.goal)
 
     def position_adjustment(self, position):
         if position in self.ladders:
@@ -102,22 +102,19 @@ class LazyPlayer(Player):
 
 class Simulation:
 
-    def __init__(self, player_list, board=None, seed=45,
+    def __init__(self, player_field, board=None, seed=45,
                  randomize_players=False):
+        self.player_list = player_field
         if board is None:
             self.board = Board()
-            self.player_list = [
-                player(self.board) for player in player_list
-            ]
         else:
-            self.board = board
-            self.player_list = [
-                player(board) for player in player_list
-            ]
+            self.board = Board()
         if randomize_players is False:
             pass
         if randomize_players is True:
             self.player_list = random.shuffle(self.player_list)
+
+        self.multi_sim = None  # Stores all the results from run_simulation
 
         random.seed(seed)
 
@@ -126,22 +123,24 @@ class Simulation:
         takes in nothing, except whats in the __init__  function.
         Returns the winner and how may steps the winner took
         """
-        player = [a for a in self.player_list]
-        dict = {}
-        counter = 0
-        for player in range(self.player_list):
-            counter += 1
-            while self.board.goal_reached(player.get_position) is False:
-                dict.keys() = counter
-                dict.value()=player.move()
+        player_dict = {}  # empty dictionary
+        for player in self.player_list:  # goes through the player_list, one
+            # player at the time
+            play = player(self.board)  # sets a board to a player so the game
+            # starts
+            while self.board.goal_reached(play.position) is False:  # as long
+                # the player has not reach the goal, it will keep on going
+                play.move()  # makes a move...
+                player_dict[player] = play.get_steps()  # takes in the steps
+                # and gets updated to the most recent step
 
+        winner_key = min(player_dict, key=lambda k: player_dict[k])  # find the
+        # winner key, who is the one with the least steps. Took this code line
+        # from internet
 
-        # for player in self.player_list:
-        #     dicts[player.n_steps] = player
-        #     while counter<len(player):
-        #         player.move()
-        #         counter += 1
-        # return print(dicts)  # very unsure if it works, not able to test
+        return player_dict[winner_key], winner_key
+        # The code 'works', but winner key get returned as __main__.Player,
+        # so it does not pass the testing, we have to fix that.
 
     def run_simulation(self, n_sims):
         """
@@ -149,7 +148,13 @@ class Simulation:
         single_game, but does not return anything, maybe make some more self
         in __init__ ?
         """
-        pass
+        the_best_results = []  # empty list...
+        for _ in range(n_sims):  # runs n_sims times...
+            the_best_results.append(self.single_game())  # runs the single_game
+            # and puts the result into the_best_results list
+
+        self.multi_sim = the_best_results  # sets multi_sim = the_best_result
+        # so the Simulation class remembers the results
 
     def get_results(self):
         """
@@ -157,7 +162,9 @@ class Simulation:
         the result from run_simulation function, e.g.,
         [(10, 'Player'), (6, 'ResilientPlayer')]
         """
-        pass
+        return self.multi_sim  # just returns the result, does not pass the
+        # test either, but returns the right thing, but only as __main__.Player
+        # so we have to fix that
 
     def winners_per_type(self):
         """
@@ -165,7 +172,18 @@ class Simulation:
         how many times a player has won for each player in a dictionary, e.g.,
         {'Player': 4, 'LazyPlayer': 2, 'ResilientPlayer': 5}
         """
-        pass
+        winner_dict = {Player: 0, LazyPlayer: 0, ResilientPlayer: 0}
+        for score, player in self.multi_sim:
+            if player == Player:
+                winner_dict[Player] += 1
+            if player == LazyPlayer:
+                winner_dict[LazyPlayer] += 1
+            if player == ResilientPlayer:
+                winner_dict[ResilientPlayer] += 1
+
+        # This code will work, but what it returns is a bit strange, but it
+        # is right
+        return winner_dict
 
     def durations_per_type(self):
         """
@@ -174,7 +192,18 @@ class Simulation:
         {'Player': [11, 25, 13], 'LazyPlayer': [39],
         'ResilientPlayer': [8, 7, 6, 11}
         """
-        pass
+        duration_dict = {Player: [], LazyPlayer: [], ResilientPlayer: []}
+        for score, player in self.multi_sim:
+            if player == Player:
+                duration_dict[Player].append(score)
+            if player == LazyPlayer:
+                duration_dict[LazyPlayer].append(score)
+            if player == ResilientPlayer:
+                duration_dict[ResilientPlayer].append(score)
+
+        # I think that this will work too, basicly the same thing as in the
+        # function over
+        return duration_dict
 
     def players_per_type(self):
         """
@@ -182,4 +211,21 @@ class Simulation:
         Returns a diictionary of how many types of player there is, e.g.,
         {'Player': 3, 'LazyPlayer': 1, 'ResilientPlayer': 0}
         """
-        pass
+        # this one is very simular to the last to functions
+        num_play_dict = {Player: 0, LazyPlayer: 0, ResilientPlayer: 0}
+        for score, player in self.multi_sim:
+            if player == Player:
+                num_play_dict[Player] += 1
+            if player == LazyPlayer:
+                num_play_dict[LazyPlayer] += 1
+            if player == ResilientPlayer:
+                num_play_dict[ResilientPlayer] += 1
+
+        # this code works aswell, only thing is that this one, as the two
+        # previus, has a weird return that we have to fix.
+        # This one returned:
+        # {__main__.Player: 7, __main__.LazyPlayer: 0,
+        # __main__.ResilientPlayer: 3}
+        # which is kind of wrong, but the code works at fortunately
+        return num_play_dict
+
