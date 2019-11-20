@@ -53,8 +53,8 @@ class Player:
 
         self.n_steps += 1
 
-    def check_in_goal(self):
-        return self.position >= self.board.goal
+    def get_position(self):
+        return self.position
 
     def get_steps(self):
         return self.n_steps
@@ -105,11 +105,12 @@ class Simulation:
     def __init__(self, player_list, board=None, seed=45,
                  randomize_players=False):
         if board is None:
-            board = Board()
+            self.board = Board()
             self.player_list = [
-                player(board) for player in player_list
+                player(self.board) for player in player_list
             ]
         else:
+            self.board = board
             self.player_list = [
                 player(board) for player in player_list
             ]
@@ -125,13 +126,22 @@ class Simulation:
         takes in nothing, except whats in the __init__  function.
         Returns the winner and how may steps the winner took
         """
-        dicts = {}
-        for player in self.player_list:
-            dicts[player.n_steps] = player
-            while player.check_in_goal():
-                player.move()
+        player = [a for a in self.player_list]
+        dict = {}
+        counter = 0
+        for player in range(self.player_list):
+            counter += 1
+            while self.board.goal_reached(player.get_position) is False:
+                dict.keys() = counter
+                dict.value()=player.move()
 
-        return print(dicts)  # very unsure if it works, not able to test
+
+        # for player in self.player_list:
+        #     dicts[player.n_steps] = player
+        #     while counter<len(player):
+        #         player.move()
+        #         counter += 1
+        # return print(dicts)  # very unsure if it works, not able to test
 
     def run_simulation(self, n_sims):
         """
