@@ -120,7 +120,6 @@ class Simulation:
 
         random.seed(seed)
 
-    @property
     def single_game(self):
         """
         takes in nothing, except whats in the __init__  function.
