@@ -110,7 +110,7 @@ def test_gambler_simulation():
 
     initial, total, p, seed, n_sim = 50, 100, 0.49, 12345, 5
     c = GamblerSimulation(initial, total, p, seed)
-    res, n = c.single_game()
+    res, n = c.single_game
     assert res in [True, False]
     assert n > 0
 

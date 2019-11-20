@@ -92,7 +92,7 @@ def test_gambler_simulation():
 
     c = GamblerSimulation(initial, total, p, seed)
 
-    res, n = c.single_game()
+    res, n = c.single_game
 
     assert res in [True, False]
 
