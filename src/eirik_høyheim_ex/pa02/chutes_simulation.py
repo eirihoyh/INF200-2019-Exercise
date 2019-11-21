@@ -102,15 +102,15 @@ class LazyPlayer(Player):
 
 class Simulation:
 
-    def __init__(self, player_field, board=None, seed=45,
+    def __init__(self, player_list, board=None, seed=45,
                  randomize_players=False):
-        self.player_list = player_field
+        self.player_list = player_list
         if board is None:
             self.board = Board()
         else:
-            self.board = Board()
-        if randomize_players is False:
-            pass
+            self.board = board  # if board is given then the given board works
+        # if randomize_players is False:
+        #     pass
         if randomize_players is True:
             self.player_list = random.shuffle(self.player_list)
 
@@ -228,4 +228,15 @@ class Simulation:
         # __main__.ResilientPlayer: 3}
         # which is kind of wrong, but the code works at fortunately
         return num_play_dict
+
+
+if __name__ == '__main__':
+
+    sim = Simulation([Player])
+    print(sim.single_game())
+
+    sim.run_simulation(10)
+    print([{key.__name__: value} for key, value in sim.players_per_type().items()])
+    print([{key.__name__: value} for key, value in sim.winners_per_type().items()])
+    print([{key.__name__: value} for key, value in sim.durations_per_type().items()])
 
