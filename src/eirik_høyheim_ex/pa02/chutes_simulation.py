@@ -102,9 +102,9 @@ class LazyPlayer(Player):
 
 class Simulation:
 
-    def __init__(self, player_list, board=None, seed=45,
+    def __init__(self, player_field, board=None, seed=45,
                  randomize_players=False):
-        self.player_list = player_list
+        self.player_list = player_field
         if board is None:
             self.board = Board()
         else:
@@ -138,7 +138,7 @@ class Simulation:
         # winner key, who is the one with the least steps. Took this code line
         # from internet
 
-        return player_dict[winner_key], winner_key
+        return player_dict[winner_key], winner_key.__name__
         # The code 'works', but winner key get returned as __main__.Player,
         # so it does not pass the testing, we have to fix that.
 
@@ -172,14 +172,14 @@ class Simulation:
         how many times a player has won for each player in a dictionary, e.g.,
         {'Player': 4, 'LazyPlayer': 2, 'ResilientPlayer': 5}
         """
-        winner_dict = {Player: 0, LazyPlayer: 0, ResilientPlayer: 0}
+        winner_dict = {'Player': 0, 'LazyPlayer': 0, 'ResilientPlayer': 0}
         for score, player in self.multi_sim:
-            if player == Player:
-                winner_dict[Player] += 1
-            if player == LazyPlayer:
-                winner_dict[LazyPlayer] += 1
-            if player == ResilientPlayer:
-                winner_dict[ResilientPlayer] += 1
+            if player == 'Player':
+                winner_dict['Player'] += 1
+            if player == 'LazyPlayer':
+                winner_dict['LazyPlayer'] += 1
+            if player == 'ResilientPlayer':
+                winner_dict['ResilientPlayer'] += 1
 
         # This code will work, but what it returns is a bit strange, but it
         # is right
@@ -192,14 +192,14 @@ class Simulation:
         {'Player': [11, 25, 13], 'LazyPlayer': [39],
         'ResilientPlayer': [8, 7, 6, 11}
         """
-        duration_dict = {Player: [], LazyPlayer: [], ResilientPlayer: []}
+        duration_dict = {'Player': [], 'LazyPlayer': [], 'ResilientPlayer': []}
         for score, player in self.multi_sim:
-            if player == Player:
-                duration_dict[Player].append(score)
-            if player == LazyPlayer:
-                duration_dict[LazyPlayer].append(score)
-            if player == ResilientPlayer:
-                duration_dict[ResilientPlayer].append(score)
+            if player == 'Player':
+                duration_dict['Player'].append(score)
+            if player == 'LazyPlayer':
+                duration_dict['LazyPlayer'].append(score)
+            if player == 'ResilientPlayer':
+                duration_dict['ResilientPlayer'].append(score)
 
         # I think that this will work too, basicly the same thing as in the
         # function over
@@ -212,14 +212,14 @@ class Simulation:
         {'Player': 3, 'LazyPlayer': 1, 'ResilientPlayer': 0}
         """
         # this one is very simular to the last to functions
-        num_play_dict = {Player: 0, LazyPlayer: 0, ResilientPlayer: 0}
+        num_play_dict = {'Player': 0, 'LazyPlayer': 0, 'ResilientPlayer': 0}
         for score, player in self.multi_sim:
-            if player == Player:
-                num_play_dict[Player] += 1
-            if player == LazyPlayer:
-                num_play_dict[LazyPlayer] += 1
-            if player == ResilientPlayer:
-                num_play_dict[ResilientPlayer] += 1
+            if player == 'Player':
+                num_play_dict['Player'] += 1
+            if player == 'LazyPlayer':
+                num_play_dict['LazyPlayer'] += 1
+            if player == 'ResilientPlayer':
+                num_play_dict['ResilientPlayer'] += 1
 
         # this code works aswell, only thing is that this one, as the two
         # previus, has a weird return that we have to fix.
@@ -232,11 +232,10 @@ class Simulation:
 
 if __name__ == '__main__':
 
-    sim = Simulation([Player])
+    sim = Simulation([Player, LazyPlayer, ResilientPlayer])
     print(sim.single_game())
-
     sim.run_simulation(10)
-    print([{key.__name__: value} for key, value in sim.players_per_type().items()])
-    print([{key.__name__: value} for key, value in sim.winners_per_type().items()])
-    print([{key.__name__: value} for key, value in sim.durations_per_type().items()])
-
+    print(sim.get_results())
+    print(sim.winners_per_type())
+    print(sim.durations_per_type())
+    print(sim.players_per_type())
