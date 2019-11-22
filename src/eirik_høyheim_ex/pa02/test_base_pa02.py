@@ -158,7 +158,7 @@ class TestSimulation:
 
         s = cs.Simulation([cs.Player, cs.Player])
 
-        nos, wc = s.single_game
+        nos, wc = s.single_game()
 
         assert nos > 0
 
