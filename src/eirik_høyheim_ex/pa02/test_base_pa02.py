@@ -126,10 +126,9 @@ class TestLazyPlayer:
         """LazyPlayer can move."""
 
         b = cs.Board()
-
         p = cs.LazyPlayer(b)
-
         p.move()
+
 
 
 class TestSimulation:
