@@ -126,10 +126,9 @@ class TestLazyPlayer:
         """LazyPlayer can move."""
 
         b = cs.Board()
-
         p = cs.LazyPlayer(b)
-
         p.move()
+
 
 
 class TestSimulation:
@@ -158,7 +157,7 @@ class TestSimulation:
 
         s = cs.Simulation([cs.Player, cs.Player])
 
-        nos, wc = s.single_game
+        nos, wc = s.single_game()
 
         assert nos > 0
 
