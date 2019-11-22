@@ -44,7 +44,7 @@ class TestResilientPlayer:
         p.move()
         assert 0 < p.get_position()
         assert 0 < p.get_steps()
-        
+
 
 class TestLazyPlayer:
 
