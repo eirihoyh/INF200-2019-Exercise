@@ -40,17 +40,9 @@ class Player:
 
     def move(self):
         die_roll = random.randint(1, 6)
-        self.position = self.position + \
-                        self.board.position_adjustment(self.position) \
-                        + die_roll
-        # if self.position in self.board.ladders:
-        #    self.position = self.board.ladders[self.position]
-
-        # if self.position in self.board.chutes:
-        #    self.position = self.board.chutes[self.position]
-
-        # self.board.position_adjustment(self.position)
-
+        self.position = (self.position +
+                         self.board.position_adjustment(
+                             self.position) + die_roll)
         self.n_steps += 1
 
     def get_position(self):
@@ -108,13 +100,12 @@ class Simulation:
         if board is None:
             self.board = Board()
         else:
-            self.board = board  # if board is given then the given board works
-        # if randomize_players is False:
-        #     pass
+            self.board = board
         if randomize_players is True:
             self.player_list = random.shuffle(self.player_list)
 
-        self.multi_sim = None  # Stores all the results from run_simulation
+        self.multi_sim = None
+        self.the_best_results = []
 
         random.seed(seed)
 
@@ -139,8 +130,6 @@ class Simulation:
         # from internet
 
         return player_dict[winner_key], winner_key.__name__
-        # The code 'works', but winner key get returned as __main__.Player,
-        # so it does not pass the testing, we have to fix that.
 
     def run_simulation(self, n_sims):
         """
@@ -148,13 +137,13 @@ class Simulation:
         single_game, but does not return anything, maybe make some more self
         in __init__ ?
         """
-        the_best_results = []  # empty list...
         for _ in range(n_sims):  # runs n_sims times...
-            the_best_results.append(self.single_game())  # runs the single_game
+            self.the_best_results.append(
+                self.single_game())  # runs the single_game
             # and puts the result into the_best_results list
 
-        self.multi_sim = the_best_results  # sets multi_sim = the_best_result
-        # so the Simulation class remembers the results
+        self.multi_sim = self.the_best_results  # sets multi_sim =
+        # the_best_result so the Simulation class remembers the results
 
     def get_results(self):
         """
@@ -201,8 +190,6 @@ class Simulation:
             if player == 'ResilientPlayer':
                 duration_dict['ResilientPlayer'].append(score)
 
-        # I think that this will work too, basicly the same thing as in the
-        # function over
         return duration_dict
 
     def players_per_type(self):
@@ -213,7 +200,7 @@ class Simulation:
         """
         # this one is very simular to the last to functions
         num_play_dict = {'Player': 0, 'LazyPlayer': 0, 'ResilientPlayer': 0}
-        for score, player in self.multi_sim:
+        for player in self.player_list:
             if player == 'Player':
                 num_play_dict['Player'] += 1
             if player == 'LazyPlayer':
@@ -221,17 +208,10 @@ class Simulation:
             if player == 'ResilientPlayer':
                 num_play_dict['ResilientPlayer'] += 1
 
-        # this code works aswell, only thing is that this one, as the two
-        # previus, has a weird return that we have to fix.
-        # This one returned:
-        # {__main__.Player: 7, __main__.LazyPlayer: 0,
-        # __main__.ResilientPlayer: 3}
-        # which is kind of wrong, but the code works at fortunately
         return num_play_dict
 
 
 if __name__ == '__main__':
-
     sim = Simulation([Player, LazyPlayer, ResilientPlayer])
     print(sim.single_game())
     sim.run_simulation(10)
