@@ -113,22 +113,13 @@ class Simulation:
         takes in nothing, except whats in the __init__  function.
         Returns the winner and how may steps the winner took
         """
-        player_dict = {}  # empty dictionary
-        for player in self.player_list:  # goes through the player_list, one
-            # player at the time
-            play = player(self.board)  # sets a board to a player so the game
-            # starts
-            while self.board.goal_reached(play.position) is False:  # as long
-                # the player has not reach the goal, it will keep on going
-                play.move()  # makes a move...
-                player_dict[player] = play.get_steps()  # takes in the steps
-                # and gets updated to the most recent step
+        players = [player(self.board) for player in self.player_list]
 
-        winner_key = min(player_dict, key=lambda k: player_dict[k])  # find the
-        # winner key, who is the one with the least steps. Took this code line
-        # from internet
-
-        return player_dict[winner_key], winner_key.__name__
+        while True:
+            for player in players:
+                player.move()
+                if self.board.goal_reached(player.position):
+                    return player.n_steps, type(player).__name__
 
     def run_simulation(self, n_sims):
         """
@@ -197,17 +188,9 @@ class Simulation:
         Returns a diictionary of how many types of player there is, e.g.,
         {'Player': 3, 'LazyPlayer': 1, 'ResilientPlayer': 0}
         """
-        # this one is very simular to the last to functions
-        num_play_dict = {'Player': 0, 'LazyPlayer': 0, 'ResilientPlayer': 0}
-        for player in self.player_list:
-            if player == 'Player':
-                num_play_dict['Player'] += 1
-            if player == 'LazyPlayer':
-                num_play_dict['LazyPlayer'] += 1
-            if player == 'ResilientPlayer':
-                num_play_dict['ResilientPlayer'] += 1
 
-        return num_play_dict
+        return {player_type.__name__: self.player_list.count(player_type) for
+                player_type in self.player_list}
 
 
 if __name__ == '__main__':
