@@ -66,8 +66,7 @@ class ResilientPlayer(Player):
         but can't see it rn"""
         super().move()
         if self.board.position_adjustment(self.position) < 0:
-            self.position += self.extra_steps  # maybe something like this?
-            # gives the player the extra step in "advance"
+            self.position += self.extra_steps
 
 
 class LazyPlayer(Player):
