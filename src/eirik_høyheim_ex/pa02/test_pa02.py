@@ -22,18 +22,6 @@ class TestPlayer:
 
 
 class TestResilientPlayer:
-
-    def test_constructor(self):
-        """ResilientPlayer can be created."""
-
-        b = cs.Board()
-
-        p = cs.ResilientPlayer(b, extra_steps=4)
-
-        assert isinstance(p, cs.ResilientPlayer)
-
-        assert isinstance(p, cs.Player)
-
     def test_move(self):
         """ResilientPlayer can move."""
 
@@ -47,15 +35,6 @@ class TestResilientPlayer:
 
 
 class TestLazyPlayer:
-
-    def test_constructor(self):
-        """LazyPlayer can be constructed."""
-
-        b = cs.Board()
-        p = cs.LazyPlayer(b, dropped_steps=3)
-        assert isinstance(p, cs.LazyPlayer)
-        assert isinstance(p, cs.Player)
-
     def test_move(self):
         """LazyPlayer can move."""
 
