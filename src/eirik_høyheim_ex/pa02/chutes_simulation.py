@@ -69,7 +69,10 @@ class ResilientPlayer(Player):
             self.position += self.extra_steps
 
         self.n_steps += 1
+
+
 class LazyPlayer(Player):
+
     default_dropped_steps = 1
 
     def __init__(self, board, dropped_steps=None):
@@ -94,11 +97,11 @@ class LazyPlayer(Player):
 
 class Simulation:
 
-    def __init__(self, player_field, board=None, seed=45,
+    def __init__(self, player_field, board=None, seed=450,
                  randomize_players=False):
         self.randomize_players = randomize_players
         self.player_list = player_field
-<<<<<<< HEAD
+
         # if board is None:
         #     self.board = Board()
         # else:
@@ -108,23 +111,12 @@ class Simulation:
         # #     pass
         self.board = board if board is not None else Board()
 
-        if self.randomize_players is True:
-            self.player_list = random.shuffle(self.player_list)
-        self.random = self.randomize_players
-        self.multi_sim = None  # Stores all the results from run_simulation
-        self.the_best_results = []
-=======
-        if board is None:
-            self.board = Board()
-        else:
-            self.board = board
         if randomize_players is True:
             self.player_list = random.shuffle(self.player_list)
 
         self.multi_sim = None
         self.the_best_results = []
 
->>>>>>> pa02
         random.seed(seed)
 
         self.P_type = [player.__name__ for player in self.player_list or []]
@@ -134,14 +126,11 @@ class Simulation:
         takes in nothing, except whats in the __init__  function.
         Returns the winner and how may steps the winner took
         """
-<<<<<<< HEAD
 
-        players = [player(self.board) for player in self.player_list]
         # if self.random:
         #     random.shuffle(players)
-=======
+
         players = [player(self.board) for player in self.player_list]
->>>>>>> pa02
 
         while True:
             for player in players:
@@ -155,19 +144,11 @@ class Simulation:
         single_game, but does not return anything, maybe make some more self
         in __init__ ?
         """
-<<<<<<< HEAD
 
-        for _ in range(n_sims):
-            self.the_best_results.append(self.single_game())
-=======
         for _ in range(n_sims):  # runs n_sims times...
             self.the_best_results.append(
                 self.single_game())  # runs the single_game
             # and puts the result into the_best_results list
-
-        self.multi_sim = self.the_best_results  # sets multi_sim =
-        # the_best_result so the Simulation class remembers the results
->>>>>>> pa02
 
     def get_results(self):
         """
@@ -196,23 +177,10 @@ class Simulation:
         {'Player': [11, 25, 13], 'LazyPlayer': [39],
         'ResilientPlayer': [8, 7, 6, 11}
         """
-<<<<<<< HEAD
 
         return {player_type: [d for d, t in self.the_best_results
                               if t == player_type]
                 for player_type in self.P_type}
-=======
-        duration_dict = {'Player': [], 'LazyPlayer': [], 'ResilientPlayer': []}
-        for score, player in self.multi_sim:
-            if player == 'Player':
-                duration_dict['Player'].append(score)
-            if player == 'LazyPlayer':
-                duration_dict['LazyPlayer'].append(score)
-            if player == 'ResilientPlayer':
-                duration_dict['ResilientPlayer'].append(score)
-
-        return duration_dict
->>>>>>> pa02
 
     def players_per_type(self):
         """
@@ -221,20 +189,14 @@ class Simulation:
         {'Player': 3, 'LazyPlayer': 1, 'ResilientPlayer': 0}
         """
 
-<<<<<<< HEAD
-        return {player_type.__name__:
-                    self.player_list.count(player_type)
+        return {player_type.__name__: self.player_list.count(player_type)
                 for player_type in self.player_list}
-=======
-        return {player_type.__name__: self.player_list.count(player_type) for
-                player_type in self.player_list}
->>>>>>> pa02
 
 
 if __name__ == '__main__':
     sim = Simulation([Player, LazyPlayer, ResilientPlayer])
     print(sim.single_game())
-    sim.run_simulation(10)
+    sim.run_simulation(7)
     print(sim.get_results())
     print(sim.winners_per_type())
     print(sim.durations_per_type())
