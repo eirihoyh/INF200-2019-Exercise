@@ -68,8 +68,11 @@ class ResilientPlayer(Player):
         if self.board.position_adjustment(self.position) < 0:
             self.position += self.extra_steps
 
+        self.n_steps += 1
+
 
 class LazyPlayer(Player):
+
     default_dropped_steps = 1
 
     def __init__(self, board, dropped_steps=None):
@@ -89,17 +92,25 @@ class LazyPlayer(Player):
             # witch we had before the throw
         if self.board.position_adjustment(self.position) > 0:
             self.position -= self.dropped_steps
+        self.n_steps += 1
 
 
 class Simulation:
 
-    def __init__(self, player_field, board=None, seed=45,
+    def __init__(self, player_field, board=None, seed=450,
                  randomize_players=False):
+        self.randomize_players = randomize_players
         self.player_list = player_field
-        if board is None:
-            self.board = Board()
-        else:
-            self.board = board
+
+        # if board is None:
+        #     self.board = Board()
+        # else:
+        #     self.board = board  # if board is given
+        # then the given board works
+        # # if randomize_players is False:
+        # #     pass
+        self.board = board if board is not None else Board()
+
         if randomize_players is True:
             self.player_list = random.shuffle(self.player_list)
 
@@ -108,11 +119,17 @@ class Simulation:
 
         random.seed(seed)
 
+        self.P_type = [player.__name__ for player in self.player_list or []]
+
     def single_game(self):
         """
         takes in nothing, except whats in the __init__  function.
         Returns the winner and how may steps the winner took
         """
+
+        # if self.random:
+        #     random.shuffle(players)
+
         players = [player(self.board) for player in self.player_list]
 
         while True:
@@ -127,13 +144,11 @@ class Simulation:
         single_game, but does not return anything, maybe make some more self
         in __init__ ?
         """
+
         for _ in range(n_sims):  # runs n_sims times...
             self.the_best_results.append(
                 self.single_game())  # runs the single_game
             # and puts the result into the_best_results list
-
-        self.multi_sim = self.the_best_results  # sets multi_sim =
-        # the_best_result so the Simulation class remembers the results
 
     def get_results(self):
         """
@@ -141,9 +156,8 @@ class Simulation:
         the result from run_simulation function, e.g.,
         [(10, 'Player'), (6, 'ResilientPlayer')]
         """
-        return self.multi_sim  # just returns the result, does not pass the
-        # test either, but returns the right thing, but only as __main__.Player
-        # so we have to fix that
+
+        return self.the_best_results
 
     def winners_per_type(self):
         """
@@ -151,18 +165,10 @@ class Simulation:
         how many times a player has won for each player in a dictionary, e.g.,
         {'Player': 4, 'LazyPlayer': 2, 'ResilientPlayer': 5}
         """
-        winner_dict = {'Player': 0, 'LazyPlayer': 0, 'ResilientPlayer': 0}
-        for score, player in self.multi_sim:
-            if player == 'Player':
-                winner_dict['Player'] += 1
-            if player == 'LazyPlayer':
-                winner_dict['LazyPlayer'] += 1
-            if player == 'ResilientPlayer':
-                winner_dict['ResilientPlayer'] += 1
 
-        # This code will work, but what it returns is a bit strange, but it
-        # is right
-        return winner_dict
+        winner_types = list(zip(*self.the_best_results))[1]
+        return {player_type: winner_types.count(player_type)
+                for player_type in self.P_type}
 
     def durations_per_type(self):
         """
@@ -171,16 +177,10 @@ class Simulation:
         {'Player': [11, 25, 13], 'LazyPlayer': [39],
         'ResilientPlayer': [8, 7, 6, 11}
         """
-        duration_dict = {'Player': [], 'LazyPlayer': [], 'ResilientPlayer': []}
-        for score, player in self.multi_sim:
-            if player == 'Player':
-                duration_dict['Player'].append(score)
-            if player == 'LazyPlayer':
-                duration_dict['LazyPlayer'].append(score)
-            if player == 'ResilientPlayer':
-                duration_dict['ResilientPlayer'].append(score)
 
-        return duration_dict
+        return {player_type: [d for d, t in self.the_best_results
+                              if t == player_type]
+                for player_type in self.P_type}
 
     def players_per_type(self):
         """
@@ -189,14 +189,14 @@ class Simulation:
         {'Player': 3, 'LazyPlayer': 1, 'ResilientPlayer': 0}
         """
 
-        return {player_type.__name__: self.player_list.count(player_type) for
-                player_type in self.player_list}
+        return {player_type.__name__: self.player_list.count(player_type)
+                for player_type in self.player_list}
 
 
 if __name__ == '__main__':
     sim = Simulation([Player, LazyPlayer, ResilientPlayer])
     print(sim.single_game())
-    sim.run_simulation(10)
+    sim.run_simulation(7)
     print(sim.get_results())
     print(sim.winners_per_type())
     print(sim.durations_per_type())
