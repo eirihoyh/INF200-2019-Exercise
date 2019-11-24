@@ -95,7 +95,6 @@ class Simulation:
 
     def __init__(self, player_field, board=None, seed=450,
                  randomize_players=False):
-        self.randomize_players = randomize_players
         self.player_list = player_field
         self.board = board if board is not None else Board()
         if randomize_players is True:
