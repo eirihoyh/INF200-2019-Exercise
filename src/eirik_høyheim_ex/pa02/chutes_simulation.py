@@ -71,7 +71,7 @@ class ResilientPlayer(Player):
 
 class LazyPlayer(Player):
     default_dropped_steps = 1
-
+    
     def __init__(self, board, dropped_steps=None):
         super().__init__(board)
         self.dropped_steps = dropped_steps
@@ -79,20 +79,17 @@ class LazyPlayer(Player):
             self.dropped_steps = self.default_dropped_steps
 
     def move(self):
-        """I think that something is wrong with this code
-        but can't see it rn"""
         orig_pos = self.position
         super().move()
-        if orig_pos > self.position:
-            self.position = orig_pos  # IOW, if the player goes backwards after
-            # climbing a ladder, we just set the position back to the orig_pos,
-            # witch we had before the throw
         if self.board.position_adjustment(self.position) > 0:
             self.position -= self.dropped_steps
+        if orig_pos > self.position:
+            self.position = orig_pos  # if the player goes backwards after
+            # climbing a ladder, we just set the position back to the orig_pos,
+            # witch we had before the throw
 
 
 class Simulation:
-
     def __init__(self, player_field, board=None, seed=450,
                  randomize_players=False):
         self.player_list = player_field
@@ -176,12 +173,12 @@ class Simulation:
         {'Player': 3, 'LazyPlayer': 1, 'ResilientPlayer': 0}
         """
         num_play_dict = {'Player': 0, 'LazyPlayer': 0, 'ResilientPlayer': 0}
-        for score, player in self.the_best_results:
-            if player == 'Player':
+        for player in self.player_list:
+            if player == Player:
                 num_play_dict['Player'] += 1
-            if player == 'LazyPlayer':
+            if player == LazyPlayer:
                 num_play_dict['LazyPlayer'] += 1
-            if player == 'ResilientPlayer':
+            if player == ResilientPlayer:
                 num_play_dict['ResilientPlayer'] += 1
 
         return num_play_dict
