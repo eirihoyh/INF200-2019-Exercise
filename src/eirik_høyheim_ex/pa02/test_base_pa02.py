@@ -130,7 +130,6 @@ class TestLazyPlayer:
         p.move()
 
 
-
 class TestSimulation:
     """Tests for Simulation class."""
 

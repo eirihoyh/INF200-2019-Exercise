@@ -71,7 +71,7 @@ class ResilientPlayer(Player):
 
 class LazyPlayer(Player):
     default_dropped_steps = 1
-    
+
     def __init__(self, board, dropped_steps=None):
         super().__init__(board)
         self.dropped_steps = dropped_steps
