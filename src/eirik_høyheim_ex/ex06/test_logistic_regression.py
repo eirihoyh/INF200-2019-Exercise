@@ -1,14 +1,15 @@
 from contextlib import contextmanager
 from unittest import mock
+
 import numpy as np
 import pytest
-from . import logistic_regression as lr
+
+import logistic_regression as lr
 
 
 # The fixtures are called whenever their name is used as input to a test
 # or another fixture. The output from the fixture call is used as the
 # corresponding input.
-
 @pytest.fixture
 def coef():
     return np.array([1, -1])
@@ -21,8 +22,6 @@ def X():
 
 # This function will call the `coef()` and `X()` fixture functions and use what
 # those functions return as input.
-
-
 @pytest.fixture
 def y(coef, X):
     return lr.predict_proba(coef, X) > 0.5
@@ -36,8 +35,6 @@ def test_sigmoid():
 
 # This function will call the `coef()` and `X()` fixture functions and use what
 # those functions return as input.
-
-
 def test_predict_proba(coef, X):
     probabilities = lr.predict_proba(coef, X)
     assert abs(probabilities[0] - 0.5) < 1e-8
@@ -47,12 +44,12 @@ def test_predict_proba(coef, X):
 
 # This function will call the `coef()`, `X()` and `y(coef(), X())` fixture
 # functions and use what those functions return as input.
-
-
 def test_logistic_gradient(coef, X, y):
     p = lr.predict_proba(coef, X)
     assert np.linalg.norm(lr.logistic_gradient(coef, X, p)) < 1e-8
+
     assert np.linalg.norm(lr.logistic_gradient(np.array([1, 100]), X, y)) > 1
+
     gradient_norm = np.linalg.norm(lr.logistic_gradient(coef, X, y))
     assert abs(gradient_norm - 0.7071067811865) < 1e-8
 
@@ -80,7 +77,7 @@ def patch_with_mock(container, name):
     ...     np.array.call_count  # -> 1
     ...     b = np.array([1, 2])
     ...     np.array.call_count  # -> 2
-    ...     hasattr(np.array, 'call_count')  # -> False
+    ... hasattr(np.array, 'call_count')  # -> False
     """
     old_func = getattr(container, name)
     mocked_function = mock.Mock(wraps=old_func)
