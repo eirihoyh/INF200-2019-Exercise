@@ -29,7 +29,7 @@ def sigmoid(z):
     sigmoidal_transformed_z : np.ndarray
         Transformed input.
     """
-    return 1/(1 + np.exp(-z))
+    return 1 / (1 + np.exp(-z))
 
 
 def predict_proba(coef, X):
@@ -61,9 +61,7 @@ def predict_proba(coef, X):
     p : np.ndarray(shape(n,))
         The predicted class probabilities.
     """
-    w = np.ndarray(shape=(coef,))
-    y = sigmoid(X*w)
-    return np.ndarray(shape=(n, ))
+    return sigmoid(np.dot(X, coef))
 
 
 def logistic_gradient(coef, X, y):
@@ -73,14 +71,16 @@ def logistic_gradient(coef, X, y):
 
     .. math::
 
-        \nabla_w L(\mathbf{w}; X, \mathbf{y}) = \sum_i \mathbf{x}_i (y_i - \hat{y}_i),
+        \nabla_w L(\mathbf{w}; X, \mathbf{y}) =
+        \sum_i \mathbf{x}_i (y_i - \hat{y}_i),
 
     or, elementwise,
 
     .. math::
 
-        \left[\nabla_w L(\mathbf{w}; X, \mathbf{y})\right]_j = \frac{\partial L}{\partial w_j}
-                                                             = \sum_i X_{ij} (y_i - \hat{y}_i),
+        \left[\nabla_w L(\mathbf{w}; X, \mathbf{y})\right]_j =
+        \frac{\partial L}{\partial w_j}
+        = \sum_i X_{ij} (y_i - \hat{y}_i),
 
     where :math:`\hat{y}_i` is the predicted value for data point
     :math:`i` and is given by :math:`\sigma(x_i^Tw)`, where
@@ -101,8 +101,7 @@ def logistic_gradient(coef, X, y):
         The gradient of the cross entropy loss related to the linear
         logistic regression model.
     """
-    # Your code here
-    pass
+    return X.T * (y - predict_proba(coef, X))
 
 
 class LogisticRegression(BaseEstimator, ClassifierMixin):
@@ -159,10 +158,13 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         learning_rate : float (default=0.01)
             The step-size for the gradient descent updates.
         random_state : np.random.random_state or int or None (default=None)
-            A numpy random state object or a seed for a numpy random state object.
+            A numpy random state object or a seed
+            for a numpy random state object.
         """
-        # Your code here
-        pass
+        self.max_iter = max_iter
+        self.tol = tol
+        self.learning_rate = learning_rate
+        self.random_state = random_state
 
     def _has_converged(self, coef, X, y):
         r"""Whether the gradient descent algorithm has converged.
@@ -193,8 +195,7 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         has_converged : bool
             True if the convergence criteria above is met, False otherwise.
         """
-        # Your code here
-        pass
+        return np.linalg.norm(logistic_gradient(coef, X, y)) < self.tol
 
     def _fit_gradient_descent(self, coef, X, y):
         r"""Fit the logisitc regression model to the data given initial weights
@@ -204,7 +205,8 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
 
         .. math::
 
-            \mathbf{w}^{(k)} \gets \mathbf{w}^{(k-1)} - \eta \nabla L(\mathbf{w}^{(k-1)}; X, \mathbf{y}),
+            \mathbf{w}^{(k)} \gets \mathbf{w}^{(k-1)} -
+            \eta \nabla L(\mathbf{w}^{(k-1)}; X, \mathbf{y}),
 
         where :math:`\mathbf{w}^{(k)}` is the coefficient vector at iteration
         ``k``, :math:`\mathbf{w}^{(k-1)}` is the coefficient vector at
@@ -231,8 +233,12 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         coef : np.ndarray(shape=(n,))
             The logistic regression weights
         """
-        # Your code here
-        pass
+        for _ in range(self.max_iter):
+            new_coef = coef - np.linalg.norm(logistic_gradient(coef, X, y))
+            if self._has_converged(coef, X, y):
+                return new_coef
+
+        return new_coef
 
     def fit(self, X, y):
         """Fit a logistic regression model to the data.
@@ -253,12 +259,12 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
 
         # A random state is a random number generator, akin to those
         # you made in earlier coursework. It has all functions of
-        # np.ranom, but its sequence of random numbers is not affected
+        # np.random, but its sequence of random numbers is not affected
         # by calls to np.random.
         random_state = check_random_state(self.random_state)
         coef = random_state.standard_normal(X.shape[1])
 
-        self.coef_ = self._fit_gradient_descent(coef, X, y)
+        self.coef_= self._fit_gradient_descent(coef, X, y)
         return self
 
     def predict_proba(self, X):
