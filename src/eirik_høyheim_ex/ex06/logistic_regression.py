@@ -264,7 +264,7 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         random_state = check_random_state(self.random_state)
         coef = random_state.standard_normal(X.shape[1])
 
-        self.coef_= self._fit_gradient_descent(coef, X, y)
+        self.coef_ = self._fit_gradient_descent(coef, X, y)
         return self
 
     def predict_proba(self, X):
