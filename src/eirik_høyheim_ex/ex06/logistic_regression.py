@@ -237,7 +237,6 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         for _ in range(self.max_iter):
             new_coef = new_coef - (self.learning_rate * np.linalg.norm(
                                        logistic_gradient(new_coef, X, y)))
-            print(self._has_converged(new_coef, X, y))
             if self._has_converged(new_coef, X, y) is True:
                 return new_coef
 
