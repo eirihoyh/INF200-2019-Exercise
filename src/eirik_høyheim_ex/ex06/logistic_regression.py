@@ -233,9 +233,12 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         coef : np.ndarray(shape=(n,))
             The logistic regression weights
         """
+        new_coef = coef
         for _ in range(self.max_iter):
-            new_coef = coef - np.linalg.norm(logistic_gradient(coef, X, y))
-            if self._has_converged(coef, X, y):
+            new_coef = new_coef - (self.learning_rate * np.linalg.norm(
+                logistic_gradient(coef, X, y)))
+            print(self._has_converged(new_coef, X, y))
+            if self._has_converged(new_coef, X, y) is True:
                 return new_coef
 
         return new_coef
@@ -331,7 +334,8 @@ if __name__ == "__main__":
     y = predict_proba(coef, X) > 0.5
 
     # Fit a logistic regression model to the X and y vector
-    # Fill in your code here.
+    lr_model = LogisticRegression()
+    lr_model.fit(X, y)
     # Create a logistic regression object and fit it to the dataset
 
     # Print performance information
